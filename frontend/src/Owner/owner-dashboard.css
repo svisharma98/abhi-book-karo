@@ -476,6 +476,18 @@
   font-weight: 650;
   line-height: 1.3;
 }
+.owner-booking-info-item.is-customer { border-color: #dceddf; background: #f0f8f1; }
+.owner-booking-info-item.is-customer strong { color: #15583f; }
+.owner-booking-info-item.is-email { border-color: #f3eef9; background: #fdfbfe; }
+.owner-booking-info-item.is-email strong { color: #523778; }
+.owner-booking-info-item.is-phone { border-color: #faefeb; background: #fefcfa; }
+.owner-booking-info-item.is-phone strong { color: #813c29; }
+.owner-booking-info-item.is-date { border-color: #d9eaf4; background: #f0f7fb; }
+.owner-booking-info-item.is-date strong { color: #205779; }
+.owner-booking-info-item.is-from { border-color: #eee8cf; background: #faf7ed; }
+.owner-booking-info-item.is-from strong { color: #68520a; }
+.owner-booking-info-item.is-to { border-color: #f7edf1; background: #fdfbfc; }
+.owner-booking-info-item.is-to strong { color: #783650; }
 .owner-booking-payment-history { padding: 14px 18px; }
 .owner-booking-payment-heading {
   display: flex;

@@ -562,12 +562,12 @@ export function Bookings() {
                 </div>
               </div>
               <div className="owner-booking-info-grid">
-                <Detail label="Customer" value={selected.customerName} />
-                <Detail label="Email" value={selected.customerEmail} />
-                {selected.customerPhone && <Detail label="Mobile number" value={selected.customerPhone} />}
-                <Detail label="Booking date & time" value={`${niceDate(selected.eventDate)} · ${selected.eventTime}`} />
-                <Detail label="From" value={selected.fromLocation || selected.venue} />
-                <Detail label="To" value={selected.toLocation || selected.venue} />
+                <Detail className="is-customer" label="Customer" value={selected.customerName} />
+                <Detail className="is-email" label="Email" value={selected.customerEmail} />
+                {selected.customerPhone && <Detail className="is-phone" label="Mobile number" value={selected.customerPhone} />}
+                <Detail className="is-date" label="Booking date & time" value={`${niceDate(selected.eventDate)} · ${selected.eventTime}`} />
+                <Detail className="is-from" label="From" value={selected.fromLocation || selected.venue} />
+                <Detail className="is-to" label="To" value={selected.toLocation || selected.venue} />
               </div>
               {selected.notes && <div className="owner-booking-notes">
                 <Typography className="owner-booking-section-label">NOTES</Typography>
@@ -749,8 +749,8 @@ export function Bookings() {
   </>;
 }
 
-function Detail({ label, value }) {
-  return <div className="owner-booking-info-item">
+function Detail({ label, value, className = "" }) {
+  return <div className={`owner-booking-info-item ${className}`}>
     <Typography component="span">{label}</Typography>
     <Typography component="strong">{value}</Typography>
   </div>;
