@@ -66,6 +66,8 @@ The backend serves the frontend build and API from one port. Deploy the root `fr
 ## Features
 
 - Clients can view only their own booking requests and respond to owner price offers.
+- Booking requests collect the selected service, booking date and time, customer contact details, start and destination locations, and optional notes.
+- Owners can set a booking's total amount and record each installment received. Paid and due amounts are calculated automatically, with payment history shown to both owner and client. This records payments received; it does not process them online.
 - Owners can view and manage all bookings, accept or reject requests, negotiate prices, and manage services including Van Booking.
 - The owner calendar shows booking information on hover; clicking an event opens full details and actions.
 - Admins can view dashboard totals and the registered user list.

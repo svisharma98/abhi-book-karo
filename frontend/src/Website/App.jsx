@@ -816,7 +816,13 @@ function BookingForm({ user }) {
     register,
     handleSubmit,
     formState: { errors, isSubmitting },
-  } = useForm();
+  } = useForm({
+    defaultValues: {
+      customerName: user?.name || "",
+      customerEmail: user?.email || "",
+      customerPhone: user?.phone || "",
+    },
+  });
   useEffect(() => {
     api
       .get(`/services/${slug}`)
@@ -862,7 +868,7 @@ function BookingForm({ user }) {
         >
           <img src={service.imageUrl} alt="" />
           <Box>
-            <Typography className="eyebrow">{service.category}</Typography>
+            <Typography className="eyebrow">SERVICE · {service.category}</Typography>
             <Typography variant="h6">{service.name}</Typography>
             <Typography variant="body2" color="text.secondary">
               From{" "}
@@ -875,7 +881,43 @@ function BookingForm({ user }) {
         <form onSubmit={handleSubmit(submit)} className="form-stack">
           <div className="form-grid">
             <TextField
-              label="Event date"
+              label="Name"
+              inputProps={{ maxLength: 100 }}
+              error={!!errors.customerName}
+              helperText={errors.customerName?.message}
+              {...register("customerName", {
+                required: "Please enter your name.",
+                minLength: { value: 2, message: "Please enter your full name." },
+              })}
+            />
+            <TextField
+              label="Email"
+              type="email"
+              error={!!errors.customerEmail}
+              helperText={errors.customerEmail?.message}
+              {...register("customerEmail", {
+                required: "Please enter your email address.",
+                pattern: {
+                  value: /^[^\s@]+@[^\s@]+\.[^\s@]+$/,
+                  message: "Please enter a valid email address.",
+                },
+              })}
+            />
+          </div>
+          <div className="form-grid">
+            <TextField
+              label="Mobile number"
+              type="tel"
+              inputProps={{ maxLength: 30 }}
+              error={!!errors.customerPhone}
+              helperText={errors.customerPhone?.message}
+              {...register("customerPhone", {
+                required: "Please enter your mobile number.",
+                minLength: { value: 7, message: "Please enter a valid mobile number." },
+              })}
+            />
+            <TextField
+              label="Booking date"
               type="date"
               InputLabelProps={{ shrink: true }}
               inputProps={{ min: new Date().toISOString().slice(0, 10) }}
@@ -885,8 +927,34 @@ function BookingForm({ user }) {
                 required: "Please choose your event date.",
               })}
             />
+          </div>
+          <div className="form-grid">
             <TextField
-              label="Preferred time"
+              label="From"
+              placeholder="Starting location"
+              inputProps={{ maxLength: 250 }}
+              error={!!errors.fromLocation}
+              helperText={errors.fromLocation?.message}
+              {...register("fromLocation", {
+                required: "Please enter the starting location.",
+                minLength: { value: 2, message: "Please enter a valid location." },
+              })}
+            />
+            <TextField
+              label="To"
+              placeholder="Destination"
+              inputProps={{ maxLength: 250 }}
+              error={!!errors.toLocation}
+              helperText={errors.toLocation?.message}
+              {...register("toLocation", {
+                required: "Please enter the destination.",
+                minLength: { value: 2, message: "Please enter a valid location." },
+              })}
+            />
+          </div>
+          <div className="form-grid">
+            <TextField
+              label="Event time"
               type="time"
               InputLabelProps={{ shrink: true }}
               error={!!errors.eventTime}
@@ -895,20 +963,7 @@ function BookingForm({ user }) {
             />
           </div>
           <TextField
-            label="Event venue / city"
-            placeholder="Where will the celebration take place?"
-            error={!!errors.venue}
-            helperText={errors.venue?.message}
-            {...register("venue", {
-              required: "Please enter your event venue.",
-              minLength: {
-                value: 3,
-                message: "Please add a little more detail.",
-              },
-            })}
-          />
-          <TextField
-            label="Anything else we should know?"
+            label="Notes"
             multiline
             minRows={3}
             placeholder="Guest count, preferences, or special requests (optional)"
@@ -1022,17 +1077,39 @@ function BookingDetails({ user }) {
           </Alert>
         )}
         <Stack spacing={2}>
+          <DetailRow label="Name" value={data.customerName} />
+          <DetailRow label="Email" value={data.customerEmail} />
+          <DetailRow label="Mobile number" value={data.customerPhone} />
           <DetailRow label="Service" value={data.serviceName} />
           <DetailRow
-            label="Event date"
-            value={`${niceDate(data.eventDate)} at ${data.eventTime}`}
+            label="Booking date"
+            value={niceDate(data.eventDate)}
           />
-          <DetailRow label="Venue" value={data.venue} />
+          <DetailRow label="From" value={data.fromLocation} />
+          <DetailRow label="To" value={data.toLocation || data.venue} />
+          <DetailRow label="Event time" value={data.eventTime} />
+          {data.notes && <DetailRow label="Notes" value={data.notes} />}
           <DetailRow
-            label="Starting price"
+            label="Total booking amount"
             value={data.totalAmount ? money(data.totalAmount) : "Custom quote"}
           />
-          <DetailRow label="Payment" value="No payment due yet" />
+          <DetailRow label="Paid so far" value={money(data.paidAmount)} />
+          <DetailRow label="Due amount" value={money(data.dueAmount)} />
+          <Box>
+            <Typography fontWeight={700} mb={1}>Payment history</Typography>
+            {data.payments?.length ? (
+              <Stack spacing={1}>
+                {data.payments.map((payment) => (
+                  <Stack key={payment.id} direction="row" justifyContent="space-between" spacing={2}>
+                    <Typography color="text.secondary">
+                      {niceDate(payment.paymentDate)}{payment.note ? ` · ${payment.note}` : ""}
+                    </Typography>
+                    <Typography fontWeight={600}>{money(payment.amount)}</Typography>
+                  </Stack>
+                ))}
+              </Stack>
+            ) : <Typography color="text.secondary">No payments recorded yet.</Typography>}
+          </Box>
         </Stack>
         <Button component={Link} to="/my-bookings" variant="outlined">
           View all my bookings
@@ -1098,7 +1175,9 @@ function MyBookings({ user }) {
                 <Typography className="eyebrow">{booking.reference}</Typography>
                 <Typography variant="h6">{booking.serviceName}</Typography>
                 <Typography color="text.secondary">
-                  {niceDate(booking.eventDate)} · {booking.venue}
+                  {niceDate(booking.eventDate)} · {booking.fromLocation && booking.toLocation
+                    ? `${booking.fromLocation} → ${booking.toLocation}`
+                    : booking.venue}
                 </Typography>
               </Box>
               <StatusChip status={booking.status} />

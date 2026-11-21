@@ -110,6 +110,34 @@ if (!bookingColumns.has("customer_email")) {
 if (!bookingColumns.has("customer_phone")) {
   db.exec("ALTER TABLE bookings ADD COLUMN customer_phone TEXT");
 }
+if (!bookingColumns.has("from_location")) {
+  db.exec("ALTER TABLE bookings ADD COLUMN from_location TEXT");
+}
+if (!bookingColumns.has("to_location")) {
+  db.exec("ALTER TABLE bookings ADD COLUMN to_location TEXT");
+}
+if (!bookingColumns.has("advance_amount")) {
+  db.exec("ALTER TABLE bookings ADD COLUMN advance_amount INTEGER NOT NULL DEFAULT 0 CHECK (advance_amount >= 0)");
+}
+
+db.exec(`
+  CREATE TABLE IF NOT EXISTS booking_payments (
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    booking_id INTEGER NOT NULL REFERENCES bookings(id) ON DELETE CASCADE,
+    amount INTEGER NOT NULL CHECK (amount > 0),
+    payment_date TEXT NOT NULL DEFAULT (date('now')),
+    note TEXT,
+    created_at TEXT NOT NULL DEFAULT CURRENT_TIMESTAMP
+  );
+  CREATE INDEX IF NOT EXISTS booking_payments_booking_id_idx ON booking_payments(booking_id);
+  INSERT INTO booking_payments (booking_id, amount, payment_date, note)
+  SELECT b.id, b.advance_amount, date(b.created_at), 'Previously recorded advance'
+  FROM bookings b
+  WHERE b.advance_amount > 0
+    AND NOT EXISTS (
+      SELECT 1 FROM booking_payments p WHERE p.booking_id = b.id
+    );
+`);
 
 const seedServices = [
   ["Van Booking", "van-booking", "Comfortable, reliable vans for wedding guests, family trips, and group travel.", "https://images.unsplash.com/photo-1519003722824-194d4455a60c?auto=format&fit=crop&w=1200&q=85", 4500, "Travel", 1],

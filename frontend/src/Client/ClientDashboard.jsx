@@ -32,7 +32,14 @@ function BookingList({ bookings, loading }) {
     <Box className="client-booking-info">
       <Typography className="client-reference">{booking.reference}</Typography>
       <Typography variant="h6">{booking.serviceName}</Typography>
-      <Typography color="text.secondary">{formatDate(booking.eventDate)} · {booking.eventTime} · {booking.venue}</Typography>
+      <Typography color="text.secondary">
+        {formatDate(booking.eventDate)} · {booking.eventTime} · {booking.fromLocation && booking.toLocation
+          ? `${booking.fromLocation} → ${booking.toLocation}`
+          : booking.venue}
+      </Typography>
+      <Typography color="text.secondary">
+        Total: ₹{booking.totalAmount} · Paid: ₹{booking.paidAmount} · Due: ₹{booking.dueAmount}
+      </Typography>
       {booking.priceOfferStatus === "pending" && <Typography className="client-offer">Owner price offer: ₹{booking.priceOfferAmount}</Typography>}
     </Box>
     <Chip label={booking.decisionStatus === "accepted" ? "Accepted" : booking.decisionStatus === "rejected" ? "Declined" : booking.status} />

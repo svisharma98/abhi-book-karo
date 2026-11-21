@@ -29,6 +29,9 @@ const errorMessage = (error) => error.response?.data?.message || "We couldn't co
 const money = (amount) => new Intl.NumberFormat("en-IN", { style: "currency", currency: "INR", maximumFractionDigits: 0 }).format(amount || 0);
 const niceDate = (date) => date ? new Date(`${date}T00:00:00`).toLocaleDateString("en-IN", { day: "numeric", month: "short", year: "numeric" }) : "Date not set";
 const localDateValue = (date) => `${date.getFullYear()}-${String(date.getMonth() + 1).padStart(2, "0")}-${String(date.getDate()).padStart(2, "0")}`;
+const bookingRoute = (booking) => booking.fromLocation && booking.toLocation
+  ? `${booking.fromLocation} → ${booking.toLocation}`
+  : booking.venue;
 
 function Loading({ label = "Loading owner workspace…" }) {
   return <Box className="loading"><CircularProgress size={28} /><Typography color="text.secondary">{label}</Typography></Box>;
@@ -121,6 +124,7 @@ export function Bookings() {
   const { data, loading, error, refresh } = useRemote(async () => (await api.get("/bookings")).data.bookings);
   const calendarRef = useRef(null);
   const datePickerRef = useRef(null);
+  const bookingDetailsRequest = useRef(0);
   const [calendarMonth, setCalendarMonth] = useState(() => localDateValue(new Date()).slice(0, 7));
   const [selected, setSelected] = useState(null);
   const [offer, setOffer] = useState({ amount: "", message: "" });
@@ -130,12 +134,15 @@ export function Bookings() {
   const [calendarInitialized, setCalendarInitialized] = useState(false);
   const [manualBookingOpen, setManualBookingOpen] = useState(false);
   const [manualBookingDate, setManualBookingDate] = useState("");
+  const [bookingAmounts, setBookingAmounts] = useState({ totalAmount: "" });
+  const [paymentEntry, setPaymentEntry] = useState({ amount: "", paymentDate: localDateValue(new Date()), note: "" });
   const [services, setServices] = useState([]);
   const [servicesLoading, setServicesLoading] = useState(true);
   const [selectedServiceFilter, setSelectedServiceFilter] = useState("all");
   const [manualBooking, setManualBooking] = useState({
     customerName: "", customerEmail: "", customerPhone: "", serviceId: "",
-    eventTime: "", venue: "", notes: ""
+    eventTime: "", fromLocation: "", toLocation: "",
+    totalAmount: "", advanceAmount: "0", notes: ""
   });
   useEffect(() => {
     api.get("/services")
@@ -211,11 +218,27 @@ export function Bookings() {
     } catch (e) { toast.error(errorMessage(e)); }
     finally { setSaving(false); }
   };
-  const openBooking = (booking) => {
+  const openBooking = async (booking) => {
+    const requestId = ++bookingDetailsRequest.current;
     setSelectedCalendarDate(booking.eventDate);
     setActiveBookingId(booking.id);
     setSelected(booking);
+    setBookingAmounts({ totalAmount: String(booking.totalAmount ?? 0) });
+    setPaymentEntry({ amount: "", paymentDate: localDateValue(new Date()), note: "" });
     setOffer({ amount: booking.priceOfferStatus === "pending" ? String(booking.priceOfferAmount) : String(booking.totalAmount || ""), message: booking.priceOfferMessage || "" });
+    try {
+      const { data: response } = await api.get(`/bookings/${booking.id}`);
+      if (bookingDetailsRequest.current === requestId) {
+        setSelected(response.booking);
+        setBookingAmounts({ totalAmount: String(response.booking.totalAmount ?? 0) });
+      }
+    } catch (e) {
+      if (bookingDetailsRequest.current === requestId) toast.error(errorMessage(e));
+    }
+  };
+  const closeBooking = () => {
+    bookingDetailsRequest.current += 1;
+    setSelected(null);
   };
   const selectCalendarDate = (date) => {
     const dateBookings = bookingsByDate.get(date) || [];
@@ -236,15 +259,24 @@ export function Bookings() {
   };
   const openManualBooking = async () => {
     if (!selectedCalendarDate || allBookedDates.has(selectedCalendarDate)) return;
+    const serviceId = selectedServiceFilter !== "all"
+      ? selectedServiceFilter
+      : String(services[0]?.id || "");
+    const service = services.find((item) => String(item.id) === serviceId);
     setManualBookingDate(selectedCalendarDate);
-    setManualBooking((current) => ({ ...current, eventTime: "" }));
-    setManualBookingOpen(true);
     setManualBooking((current) => ({
-      ...current,
-      serviceId: selectedServiceFilter !== "all"
-        ? selectedServiceFilter
-        : current.serviceId || String(services[0]?.id || "")
+      customerName: "",
+      customerEmail: "",
+      customerPhone: "",
+      serviceId,
+      eventTime: "",
+      fromLocation: "",
+      toLocation: "",
+      totalAmount: String(service?.priceFrom ?? 0),
+      advanceAmount: "0",
+      notes: ""
     }));
+    setManualBookingOpen(true);
   };
   const updateManualBooking = (key, value) => {
     setManualBooking((current) => ({ ...current, [key]: value }));
@@ -256,6 +288,8 @@ export function Bookings() {
       const { data: response } = await api.post("/bookings/manual", {
         ...manualBooking,
         serviceId: Number(manualBooking.serviceId),
+        totalAmount: Number(manualBooking.totalAmount),
+        advanceAmount: Number(manualBooking.advanceAmount),
         eventDate: manualBookingDate
       });
       setActiveBookingId(response.booking.id);
@@ -267,15 +301,50 @@ export function Bookings() {
     } catch (e) { toast.error(errorMessage(e)); }
     finally { setSaving(false); }
   };
+  const saveBookingAmounts = async (event) => {
+    event.preventDefault();
+    if (!selected) return;
+    setSaving(true);
+    try {
+      const { data: response } = await api.patch(`/bookings/${selected.id}/amounts`, {
+        totalAmount: Number(bookingAmounts.totalAmount)
+      });
+      setSelected(response.booking);
+      setBookingAmounts({
+        totalAmount: String(response.booking.totalAmount)
+      });
+      toast.success("Total booking amount updated.");
+      await refresh();
+    } catch (e) { toast.error(errorMessage(e)); }
+    finally { setSaving(false); }
+  };
+  const recordBookingPayment = async (event) => {
+    event.preventDefault();
+    if (!selected) return;
+    setSaving(true);
+    try {
+      const { data: response } = await api.post(`/bookings/${selected.id}/payments`, {
+        amount: Number(paymentEntry.amount),
+        paymentDate: paymentEntry.paymentDate,
+        note: paymentEntry.note
+      });
+      setSelected(response.booking);
+      setBookingAmounts({ totalAmount: String(response.booking.totalAmount) });
+      setPaymentEntry({ amount: "", paymentDate: localDateValue(new Date()), note: "" });
+      toast.success("Payment recorded.");
+      await refresh();
+    } catch (e) { toast.error(errorMessage(e)); }
+    finally { setSaving(false); }
+  };
   const eventContent = (info) => {
     const booking = info.event.extendedProps.booking;
     const details = <Stack spacing={.5} className="calendar-tooltip">
       <strong>{booking.serviceName}</strong><span>{booking.customerName} · {booking.customerPhone || booking.customerEmail}</span>
-      <span>{niceDate(booking.eventDate)} at {booking.eventTime}</span><span>{booking.venue}</span>
+      <span>{niceDate(booking.eventDate)} at {booking.eventTime}</span><span>{bookingRoute(booking)}</span>
       <span>{booking.priceOfferStatus === "pending" ? `Offer pending: ${money(booking.priceOfferAmount)}` : `Price: ${money(booking.totalAmount)}`}</span>
     </Stack>;
     return <Tooltip title={details} arrow placement="top">
-      <span className={`calendar-event calendar-event-${booking.decisionStatus}`} title={`${booking.customerName} · ${booking.serviceName} · ${booking.venue}`}>
+      <span className={`calendar-event calendar-event-${booking.decisionStatus}`} title={`${booking.customerName} · ${booking.serviceName} · ${bookingRoute(booking)}`}>
         {info.view.type === "dayGridMonth"
           ? booking.decisionStatus === "accepted"
             ? <span className="booked-day-mark"><CheckCircle /><span>Booked</span></span>
@@ -425,44 +494,170 @@ export function Bookings() {
     </Paper>
     <Paper className="panel" elevation={0}>
       <Typography variant="h6">All booking requests</Typography>
-      <div className="table-scroll"><table><thead><tr><th>Customer</th><th>Service & event</th><th>Venue</th><th>Decision</th><th>Price</th><th>Actions</th></tr></thead><tbody>
+      <div className="table-scroll"><table><thead><tr><th>Customer</th><th>Service & event</th><th>From / to</th><th>Decision</th><th>Price</th><th>Actions</th></tr></thead><tbody>
         {data.map((booking) => <tr key={booking.id}>
           <td>{booking.customerName}<small>{booking.customerEmail}</small></td>
           <td>{booking.serviceName}<small>{niceDate(booking.eventDate)} · {booking.eventTime}</small></td>
-          <td>{booking.venue}</td><td><DecisionChip booking={booking} /></td>
+          <td>{bookingRoute(booking)}</td><td><DecisionChip booking={booking} /></td>
           <td>{booking.priceOfferStatus === "pending" ? <><strong>{money(booking.priceOfferAmount)}</strong><small>Offer awaiting response</small></> : money(booking.totalAmount)}</td>
           <td><Button size="small" onClick={() => openBooking(booking)}>Details / negotiate</Button></td>
         </tr>)}
       </tbody></table></div>
       {!data.length && <EmptyState text="No booking requests yet." />}
     </Paper>
-    <Dialog open={Boolean(selected)} onClose={() => !saving && setSelected(null)} fullWidth maxWidth="sm">
+    <Dialog
+      open={Boolean(selected)}
+      onClose={() => !saving && closeBooking()}
+      fullWidth
+      maxWidth="md"
+      className="owner-booking-dialog"
+    >
       {selected && <>
-        <DialogTitle>Booking details</DialogTitle>
-        <DialogContent><Stack spacing={1.5} className="booking-detail">
-          <div><Typography className="eyebrow">REFERENCE</Typography><Typography fontWeight={700}>{selected.reference}</Typography></div>
-          <Detail label="Customer" value={`${selected.customerName} · ${selected.customerEmail}`} />
-          {selected.customerPhone && <Detail label="Phone" value={selected.customerPhone} />}
-          <Detail label="Service" value={selected.serviceName} />
-          <Detail label="Date & time" value={`${niceDate(selected.eventDate)} · ${selected.eventTime}`} />
-          <Detail label="Venue" value={selected.venue} />
-          {selected.notes && <Detail label="Notes" value={selected.notes} />}
-          <Detail label="Booking status" value={<DecisionChip booking={selected} />} />
-          <Detail label="Current price" value={money(selected.totalAmount)} />
-          {selected.priceOfferStatus !== "none" && <Alert severity={selected.priceOfferStatus === "pending" ? "info" : "success"}>
+        <DialogTitle className="owner-booking-dialog-title">
+          <Box className="owner-booking-header-main">
+            {selected.serviceImage && <img src={selected.serviceImage} alt="" />}
+            <Box>
+              <Typography variant="h5">{selected.serviceName}</Typography>
+              <Typography className="owner-booking-header-date">
+                {niceDate(selected.eventDate)} · {selected.eventTime}
+              </Typography>
+              <Typography className="owner-booking-reference">{selected.reference}</Typography>
+            </Box>
+          </Box>
+          <Stack direction="row" spacing={1} alignItems="center">
+            <DecisionChip booking={selected} />
+            <IconButton
+              aria-label="Close booking details"
+              onClick={() => !saving && closeBooking()}
+              disabled={saving}
+              size="small"
+            >
+              <Close />
+            </IconButton>
+          </Stack>
+        </DialogTitle>
+        <DialogContent className="owner-booking-dialog-content">
+          <Stack spacing={2.5} className="booking-detail">
+            <section className="owner-booking-amounts" aria-label="Booking payment summary">
+              <div className="owner-booking-amount-card">
+                <span>Total booking amount</span>
+                <strong>{money(selected.totalAmount)}</strong>
+              </div>
+              <div className="owner-booking-amount-card">
+                <span>Paid so far</span>
+                <strong>{money(selected.advanceAmount)}</strong>
+              </div>
+              <div className="owner-booking-amount-card owner-booking-amount-due">
+                <span>Due amount</span>
+                <strong>{money(selected.dueAmount)}</strong>
+              </div>
+            </section>
+
+            <section className="owner-booking-info">
+              <Typography className="owner-booking-section-label">CUSTOMER & EVENT</Typography>
+              <div className="owner-booking-info-grid">
+                <Detail label="Customer" value={selected.customerName} />
+                <Detail label="Email" value={selected.customerEmail} />
+                {selected.customerPhone && <Detail label="Mobile number" value={selected.customerPhone} />}
+                <Detail label="Booking date" value={niceDate(selected.eventDate)} />
+                <Detail label="Event time" value={selected.eventTime} />
+                <Detail label="From" value={selected.fromLocation || selected.venue} />
+                <Detail label="To" value={selected.toLocation || selected.venue} />
+              </div>
+              {selected.notes && <div className="owner-booking-notes">
+                <Typography className="owner-booking-section-label">NOTES</Typography>
+                <Typography>{selected.notes}</Typography>
+              </div>}
+            </section>
+
+            <section className="owner-booking-info">
+              <Typography className="owner-booking-section-label">PAYMENT HISTORY</Typography>
+              {selected.payments?.length ? <div className="owner-booking-payment-list">
+                {selected.payments.map((payment) => (
+                  <div className="owner-booking-payment-row" key={payment.id}>
+                    <div>
+                      <strong>{money(payment.amount)}</strong>
+                      <span>{niceDate(payment.paymentDate)}</span>
+                    </div>
+                    {payment.note && <Typography>{payment.note}</Typography>}
+                  </div>
+                ))}
+              </div> : <Typography className="owner-booking-no-payments" color="text.secondary">
+                No payments recorded yet.
+              </Typography>}
+            </section>
+
+            {selected.decisionStatus !== "accepted" && selected.priceOfferStatus !== "none" && <Alert severity={selected.priceOfferStatus === "pending" ? "info" : "success"}>
             {selected.priceOfferStatus === "pending" ? `Offer sent: ${money(selected.priceOfferAmount)}. Waiting for customer response.` : `Last offer ${selected.priceOfferStatus}: ${money(selected.priceOfferAmount)}.`}
             {selected.priceOfferMessage && <Typography variant="body2">{selected.priceOfferMessage}</Typography>}
           </Alert>}
-          <Divider />
-          <form onSubmit={sendOffer}><Stack spacing={1.5}>
-            <Typography fontWeight={700}>Send or update price offer</Typography>
-            <TextField label="Offer amount (₹)" type="number" inputProps={{ min: 0, step: 1 }} required value={offer.amount} onChange={(e) => setOffer({ ...offer, amount: e.target.value })} />
-            <TextField label="Message for the customer" multiline minRows={2} inputProps={{ maxLength: 500 }} value={offer.message} onChange={(e) => setOffer({ ...offer, message: e.target.value })} />
-            <Button type="submit" variant="outlined" startIcon={<Paid />} disabled={saving}>{saving ? "Sending…" : "Send price offer"}</Button>
-          </Stack></form>
-        </Stack></DialogContent>
-        <DialogActions className="decision-actions">
+            <div className="owner-booking-management">
+              <form className="owner-booking-form-card" onSubmit={saveBookingAmounts}>
+                <div>
+                  <Typography variant="h6">Total booking amount</Typography>
+                  <Typography color="text.secondary">Set the agreed total. Payments already received cannot be exceeded by this amount.</Typography>
+                </div>
+                <TextField
+                  label="Total booking amount (₹)"
+                  type="number"
+                  inputProps={{ min: selected.advanceAmount, step: 1 }}
+                  required
+                  value={bookingAmounts.totalAmount}
+                  onChange={(e) => setBookingAmounts({ totalAmount: e.target.value })}
+                />
+                <Button type="submit" variant="contained" disabled={saving}>
+                  {saving ? "Saving…" : "Save total amount"}
+                </Button>
+              </form>
+
+              <form className="owner-booking-form-card" onSubmit={recordBookingPayment}>
+                <div>
+                  <Typography variant="h6">Record an installment</Typography>
+                  <Typography color="text.secondary">Add each payment received. Remaining due: {money(selected.dueAmount)}.</Typography>
+                </div>
+                <TextField
+                  label="Payment amount (₹)"
+                  type="number"
+                  inputProps={{ min: 1, max: selected.dueAmount, step: 1 }}
+                  required
+                  value={paymentEntry.amount}
+                  onChange={(e) => setPaymentEntry({ ...paymentEntry, amount: e.target.value })}
+                />
+                <TextField
+                  label="Payment date"
+                  type="date"
+                  InputLabelProps={{ shrink: true }}
+                  required
+                  value={paymentEntry.paymentDate}
+                  onChange={(e) => setPaymentEntry({ ...paymentEntry, paymentDate: e.target.value })}
+                />
+                <TextField
+                  label="Note (optional)"
+                  placeholder="e.g. Second installment"
+                  inputProps={{ maxLength: 250 }}
+                  value={paymentEntry.note}
+                  onChange={(e) => setPaymentEntry({ ...paymentEntry, note: e.target.value })}
+                />
+                <Button type="submit" variant="outlined" startIcon={<Paid />} disabled={saving || selected.dueAmount <= 0}>
+                  {saving ? "Recording…" : "Record payment"}
+                </Button>
+              </form>
+
+              {selected.decisionStatus !== "accepted" && <form className="owner-booking-form-card" onSubmit={sendOffer}>
+                  <div>
+                    <Typography variant="h6">Price offer</Typography>
+                    <Typography color="text.secondary">Send or update a quote for the customer.</Typography>
+                  </div>
+                  <TextField label="Offer amount (₹)" type="number" inputProps={{ min: 0, step: 1 }} required value={offer.amount} onChange={(e) => setOffer({ ...offer, amount: e.target.value })} />
+                  <TextField label="Message for the customer" multiline minRows={2} inputProps={{ maxLength: 500 }} value={offer.message} onChange={(e) => setOffer({ ...offer, message: e.target.value })} />
+                  <Button type="submit" variant="outlined" startIcon={<Paid />} disabled={saving}>{saving ? "Sending…" : "Send price offer"}</Button>
+                </form>}
+            </div>
+          </Stack>
+        </DialogContent>
+        <DialogActions className="decision-actions owner-booking-dialog-actions">
           <Button color="error" startIcon={<Close />} disabled={saving || selected.decisionStatus === "rejected"} onClick={() => decide("rejected")}>Reject booking</Button>
+          <Box sx={{ flex: 1 }} />
           <Button variant="contained" startIcon={<Check />} disabled={saving || selected.decisionStatus === "accepted"} onClick={() => decide("accepted")}>Accept booking</Button>
         </DialogActions>
       </>}
@@ -489,7 +684,15 @@ export function Bookings() {
                 setManualBookingDate(e.target.value);
               }}
             />
-            <TextField select label="Service" required value={manualBooking.serviceId} onChange={(e) => updateManualBooking("serviceId", e.target.value)}>
+            <TextField select label="Service" required value={manualBooking.serviceId} onChange={(e) => {
+              const serviceId = e.target.value;
+              const service = services.find((item) => String(item.id) === serviceId);
+              setManualBooking((current) => ({
+                ...current,
+                serviceId,
+                totalAmount: String(service?.priceFrom ?? 0)
+              }));
+            }}>
               {services.map((service) => <MenuItem key={service.id} value={service.id}>{service.name} · {service.priceFrom ? money(service.priceFrom) : "Custom quote"}</MenuItem>)}
             </TextField>
               <div className="form-grid">
@@ -497,11 +700,21 @@ export function Bookings() {
                 <TextField label="Customer email" type="email" required value={manualBooking.customerEmail} onChange={(e) => updateManualBooking("customerEmail", e.target.value)} />
               </div>
               <div className="form-grid">
-                <TextField label="Phone (optional)" type="tel" inputProps={{ maxLength: 30 }} value={manualBooking.customerPhone} onChange={(e) => updateManualBooking("customerPhone", e.target.value)} />
+                <TextField label="Mobile number" type="tel" required inputProps={{ minLength: 7, maxLength: 30 }} value={manualBooking.customerPhone} onChange={(e) => updateManualBooking("customerPhone", e.target.value)} />
                 <TextField label="Event time" type="time" required InputLabelProps={{ shrink: true }} value={manualBooking.eventTime} onChange={(e) => updateManualBooking("eventTime", e.target.value)} />
               </div>
-              <TextField label="Event venue / city" required inputProps={{ minLength: 3, maxLength: 250 }} value={manualBooking.venue} onChange={(e) => updateManualBooking("venue", e.target.value)} />
-              <TextField label="Notes (optional)" multiline minRows={2} inputProps={{ maxLength: 1000 }} value={manualBooking.notes} onChange={(e) => updateManualBooking("notes", e.target.value)} />
+              <div className="form-grid">
+                <TextField label="From" required inputProps={{ minLength: 2, maxLength: 250 }} value={manualBooking.fromLocation} onChange={(e) => updateManualBooking("fromLocation", e.target.value)} />
+                <TextField label="To" required inputProps={{ minLength: 2, maxLength: 250 }} value={manualBooking.toLocation} onChange={(e) => updateManualBooking("toLocation", e.target.value)} />
+              </div>
+              <div className="form-grid">
+                <TextField label="Total booking amount (₹)" type="number" required inputProps={{ min: 0, step: 1 }} value={manualBooking.totalAmount} onChange={(e) => updateManualBooking("totalAmount", e.target.value)} />
+                <TextField label="Initial payment (₹)" type="number" required inputProps={{ min: 0, max: manualBooking.totalAmount, step: 1 }} value={manualBooking.advanceAmount} onChange={(e) => updateManualBooking("advanceAmount", e.target.value)} />
+              </div>
+              <Typography color="text.secondary">
+                Due amount: {money(Math.max(0, Number(manualBooking.totalAmount || 0) - Number(manualBooking.advanceAmount || 0)))}
+              </Typography>
+              <TextField label="Notes" multiline minRows={2} inputProps={{ maxLength: 1000 }} value={manualBooking.notes} onChange={(e) => updateManualBooking("notes", e.target.value)} />
             </>}
           </Stack>
         </DialogContent>
@@ -517,7 +730,10 @@ export function Bookings() {
 }
 
 function Detail({ label, value }) {
-  return <Stack direction="row" justifyContent="space-between" spacing={2}><Typography color="text.secondary">{label}</Typography><Typography fontWeight={600} textAlign="right">{value}</Typography></Stack>;
+  return <div className="owner-booking-info-item">
+    <Typography component="span">{label}</Typography>
+    <Typography component="strong">{value}</Typography>
+  </div>;
 }
 
 const emptyService = { name: "", slug: "", description: "", imageUrl: "", priceFrom: 0, category: "Events", featured: false, active: true };
