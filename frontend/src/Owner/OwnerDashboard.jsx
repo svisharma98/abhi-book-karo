@@ -562,11 +562,11 @@ export function Bookings() {
                 </div>
               </div>
               <div className="owner-booking-info-grid">
-                <Detail className="is-customer" label="Customer" value={selected.customerName} />
+                <Detail className="is-date" label="Customer" value={selected.customerName} />
                 <Detail className="is-email" label="Email" value={selected.customerEmail} />
                 {selected.customerPhone && <Detail className="is-phone" label="Mobile number" value={selected.customerPhone} />}
                 <Detail className="is-date" label="Booking date & time" value={`${niceDate(selected.eventDate)} · ${selected.eventTime}`} />
-                <Detail className="is-from" label="From" value={selected.fromLocation || selected.venue} />
+                <Detail className="is-date" label="From" value={selected.fromLocation || selected.venue} />
                 <Detail className="is-to" label="To" value={selected.toLocation || selected.venue} />
               </div>
               {selected.notes && <div className="owner-booking-notes">
