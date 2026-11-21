@@ -644,21 +644,33 @@ export function Bookings() {
 
             <section className="owner-booking-info owner-booking-payment-history">
               <div className="owner-booking-payment-heading">
-                <Typography variant="h6">Payment history</Typography>
+                <div>
+                  <Typography variant="h6">Payment history</Typography>
+                  <Typography color="text.secondary">Installments received toward this booking</Typography>
+                </div>
                 <span>{selected.payments?.length || 0} {selected.payments?.length === 1 ? "payment" : "payments"}</span>
               </div>
               {selected.payments?.length ? <div className="owner-booking-payment-list">
+                <div className="owner-booking-payment-columns" aria-hidden="true">
+                  <span>Amount received</span>
+                  <span>Date paid</span>
+                  <span>Note</span>
+                </div>
                 {selected.payments.map((payment) => (
                   <div className="owner-booking-payment-row" key={payment.id}>
-                    <div>
+                    <div className="owner-booking-payment-amount">
                       <strong>{money(payment.amount)}</strong>
-                      <span>{niceDate(payment.paymentDate)}</span>
                     </div>
-                    {payment.note && <Typography>{payment.note}</Typography>}
+                    <div className="owner-booking-payment-date">
+                      <strong>{niceDate(payment.paymentDate)}</strong>
+                    </div>
+                    <div className="owner-booking-payment-note">
+                      <strong>{payment.note || "—"}</strong>
+                    </div>
                   </div>
                 ))}
               </div> : <Typography className="owner-booking-no-payments" color="text.secondary">
-                No payments recorded yet.
+                No installments have been recorded for this booking yet.
               </Typography>}
             </section>
           </Stack>
