@@ -539,28 +539,33 @@ export function Bookings() {
         <DialogContent className="owner-booking-dialog-content">
           <Stack spacing={2.5} className="booking-detail">
             <section className="owner-booking-amounts" aria-label="Booking payment summary">
-              <div className="owner-booking-amount-card">
+              <div className="owner-booking-amount-card owner-booking-amount-total">
                 <span>Total booking amount</span>
                 <strong>{money(selected.totalAmount)}</strong>
               </div>
-              <div className="owner-booking-amount-card">
-                <span>Paid so far</span>
+              <div className="owner-booking-amount-card owner-booking-amount-paid">
+                <span>Paid amount</span>
                 <strong>{money(selected.paidAmount)}</strong>
               </div>
-              <div className="owner-booking-amount-card owner-booking-amount-due">
+              <div className={`owner-booking-amount-card owner-booking-amount-due ${selected.dueAmount <= 0 ? "is-settled" : ""}`}>
                 <span>Due amount</span>
                 <strong>{money(selected.dueAmount)}</strong>
               </div>
             </section>
 
-            <section className="owner-booking-info">
-              <Typography className="owner-booking-section-label">CUSTOMER & EVENT</Typography>
+            <section className="owner-booking-info owner-booking-customer-card">
+              <div className="owner-booking-card-heading">
+                <span><EventAvailable /></span>
+                <div>
+                  <Typography variant="h6">Customer & event</Typography>
+                  <Typography color="text.secondary">Contact information and event details</Typography>
+                </div>
+              </div>
               <div className="owner-booking-info-grid">
                 <Detail label="Customer" value={selected.customerName} />
                 <Detail label="Email" value={selected.customerEmail} />
                 {selected.customerPhone && <Detail label="Mobile number" value={selected.customerPhone} />}
-                <Detail label="Booking date" value={niceDate(selected.eventDate)} />
-                <Detail label="Event time" value={selected.eventTime} />
+                <Detail label="Booking date & time" value={`${niceDate(selected.eventDate)} · ${selected.eventTime}`} />
                 <Detail label="From" value={selected.fromLocation || selected.venue} />
                 <Detail label="To" value={selected.toLocation || selected.venue} />
               </div>
@@ -568,23 +573,6 @@ export function Bookings() {
                 <Typography className="owner-booking-section-label">NOTES</Typography>
                 <Typography>{selected.notes}</Typography>
               </div>}
-            </section>
-
-            <section className="owner-booking-info">
-              <Typography className="owner-booking-section-label">PAYMENT HISTORY</Typography>
-              {selected.payments?.length ? <div className="owner-booking-payment-list">
-                {selected.payments.map((payment) => (
-                  <div className="owner-booking-payment-row" key={payment.id}>
-                    <div>
-                      <strong>{money(payment.amount)}</strong>
-                      <span>{niceDate(payment.paymentDate)}</span>
-                    </div>
-                    {payment.note && <Typography>{payment.note}</Typography>}
-                  </div>
-                ))}
-              </div> : <Typography className="owner-booking-no-payments" color="text.secondary">
-                No payments recorded yet.
-              </Typography>}
             </section>
 
             {selected.decisionStatus !== "accepted" && selected.priceOfferStatus !== "none" && <Alert severity={selected.priceOfferStatus === "pending" ? "info" : "success"}>
@@ -595,7 +583,7 @@ export function Bookings() {
               <form className="owner-booking-form-card" onSubmit={saveBookingAmounts}>
                 <div>
                   <Typography variant="h6">Total booking amount</Typography>
-                  <Typography color="text.secondary">Set the agreed total. Payments already received cannot be exceeded by this amount.</Typography>
+                  {/* <Typography color="text.secondary">Set the agreed total.</Typography> */}
                 </div>
                 <TextField
                   label="Total booking amount (₹)"
@@ -653,6 +641,26 @@ export function Bookings() {
                   <Button type="submit" variant="outlined" startIcon={<Paid />} disabled={saving}>{saving ? "Sending…" : "Send price offer"}</Button>
                 </form>}
             </div>
+
+            <section className="owner-booking-info owner-booking-payment-history">
+              <div className="owner-booking-payment-heading">
+                <Typography variant="h6">Payment history</Typography>
+                <span>{selected.payments?.length || 0} {selected.payments?.length === 1 ? "payment" : "payments"}</span>
+              </div>
+              {selected.payments?.length ? <div className="owner-booking-payment-list">
+                {selected.payments.map((payment) => (
+                  <div className="owner-booking-payment-row" key={payment.id}>
+                    <div>
+                      <strong>{money(payment.amount)}</strong>
+                      <span>{niceDate(payment.paymentDate)}</span>
+                    </div>
+                    {payment.note && <Typography>{payment.note}</Typography>}
+                  </div>
+                ))}
+              </div> : <Typography className="owner-booking-no-payments" color="text.secondary">
+                No payments recorded yet.
+              </Typography>}
+            </section>
           </Stack>
         </DialogContent>
         <DialogActions className="decision-actions owner-booking-dialog-actions">

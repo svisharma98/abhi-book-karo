@@ -366,70 +366,159 @@
   gap: 11px;
 }
 .owner-booking-amount-card {
-  display: grid;
-  gap: 9px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
   min-width: 0;
-  padding: 18px;
-  border: 1px solid #e9edf5;
-  border-radius: 13px;
-  background: #f8f9fc;
+  padding: 11px 15px;
+  border: 1px solid transparent;
+  border-radius: 11px;
 }
-.owner-booking-amount-card span { color: #52627e; font-size: 14px; line-height: 1.35; }
+.owner-booking-amount-card span { color: #40516f; font-size: 14px; font-weight: 600; line-height: 1.35; }
 .owner-booking-amount-card strong {
   overflow: hidden;
-  color: #172545;
-  font-size: clamp(20px, 2vw, 25px);
+  flex: 0 0 auto;
+  color: #173c8a;
+  font-size: 21px;
   font-weight: 750;
   text-overflow: ellipsis;
   white-space: nowrap;
 }
-.owner-booking-amount-due {
+.owner-booking-amount-total {
   border-color: #dce7ff;
-  background: #f0f4ff;
+  background: #f0f5ff;
 }
-.owner-booking-amount-due strong { color: #2456c4; }
+.owner-booking-amount-total strong { color: #2456c4; }
+.owner-booking-amount-paid {
+  border-color: #d6efe2;
+  background: #effaf4;
+}
+.owner-booking-amount-paid strong { color: #16834a; }
+.owner-booking-amount-due {
+  border-color: #f5dfbf;
+  background: #fff8ed;
+}
+.owner-booking-amount-due strong { color: #b66510; }
+.owner-booking-amount-due.is-settled {
+  border-color: #d6efe2;
+  background: #effaf4;
+}
+.owner-booking-amount-due.is-settled strong { color: #16834a; }
 .owner-booking-info {
   padding: 20px;
   border: 1px solid #e9edf5;
   border-radius: 14px;
 }
+.owner-booking-customer-card {
+  position: relative;
+  overflow: hidden;
+  padding: 14px 16px;
+  border-color: #e2e9f7;
+  background: linear-gradient(145deg, #fff 25%, #f8faff);
+}
+.owner-booking-card-heading {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding-bottom: 10px;
+  border-bottom: 1px solid #e9edf5;
+}
+.owner-booking-card-heading > span {
+  display: grid;
+  width: 34px;
+  height: 34px;
+  flex: 0 0 34px;
+  place-items: center;
+  border: 1px solid #dfe8ff;
+  border-radius: 10px;
+  background: #edf3ff;
+  color: #315dc1;
+}
+.owner-booking-card-heading > span svg { width: 19px; height: 19px; }
+.owner-booking-card-heading h6 {
+  color: #172545;
+  font-size: 16px;
+  font-weight: 750;
+  line-height: 1.3;
+}
+.owner-booking-card-heading p {
+  margin-top: 1px;
+  color: #667692;
+  font-size: 12px;
+}
 .owner-booking-info-grid {
   display: grid;
   grid-template-columns: repeat(2, minmax(0, 1fr));
-  gap: 0 22px;
-  margin-top: 7px;
+  gap: 7px;
+  margin-top: 10px;
 }
 .owner-booking-info-item {
   display: grid;
-  gap: 4px;
+  gap: 2px;
   min-width: 0;
-  padding: 12px 0;
-  border-bottom: 1px solid #f0f2f7;
+  padding: 7px 10px;
+  border: 1px solid #edf0f6;
+  border-radius: 8px;
+  background: rgba(255, 255, 255, .86);
 }
-.owner-booking-info-item span { color: #596a86; font-size: 14px; }
+.owner-booking-info-item span {
+  color: #6a7891;
+  font-size: 11px;
+  font-weight: 650;
+  letter-spacing: .2px;
+  text-transform: uppercase;
+}
 .owner-booking-info-item strong {
   overflow-wrap: anywhere;
-  color: #253553;
-  font-size: 16px;
-  font-weight: 600;
+  color: #1b2b4a;
+  font-size: 14px;
+  font-weight: 650;
+  line-height: 1.3;
 }
-.owner-booking-payment-list { display: grid; margin-top: 8px; }
+.owner-booking-payment-history { padding: 14px 18px; }
+.owner-booking-payment-heading {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+}
+.owner-booking-payment-heading h6 {
+  color: #172545;
+  font-size: 16px;
+  font-weight: 750;
+}
+.owner-booking-payment-heading > span {
+  padding: 4px 9px;
+  border-radius: 999px;
+  background: #edf3ff;
+  color: #315dc1;
+  font-size: 12px;
+  font-weight: 700;
+}
+.owner-booking-payment-list {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  column-gap: 22px;
+  margin-top: 6px;
+}
 .owner-booking-payment-row {
   display: flex;
   align-items: center;
   justify-content: space-between;
   gap: 12px;
-  padding: 11px 0;
+  min-width: 0;
+  padding: 8px 0;
   border-bottom: 1px solid #f0f2f7;
 }
 .owner-booking-payment-row:last-child { border-bottom: 0; }
 .owner-booking-payment-row > div { display: grid; gap: 3px; }
-.owner-booking-payment-row strong { color: #253553; font-size: 16px; }
+.owner-booking-payment-row strong { color: #253553; font-size: 15px; }
 .owner-booking-payment-row span,
 .owner-booking-payment-row > p { color: #596a86; font-size: 14px; }
-.owner-booking-payment-row span { color: #596a86; font-size: 14px; }
+.owner-booking-payment-row span { color: #596a86; font-size: 13px; }
 .owner-booking-payment-row > p { margin: 0; text-align: right; overflow-wrap: anywhere; }
-.owner-booking-no-payments { margin-top: 8px !important; font-size: 12px !important; }
+.owner-booking-no-payments { margin-top: 5px !important; font-size: 13px !important; }
 .owner-booking-notes { display: grid; gap: 8px; margin-top: 15px; }
 .owner-booking-notes > p:last-child {
   margin: 0;
@@ -498,12 +587,15 @@
   .owner-booking-header-date { font-size: 14px !important; }
   .owner-booking-dialog-content { max-height: 72vh; padding: 18px 20px !important; }
   .owner-booking-amounts { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 9px; }
-  .owner-booking-amount-card { gap: 6px; padding: 13px; }
-  .owner-booking-amount-card span { font-size: 13px; }
-  .owner-booking-amount-card strong { font-size: 20px; }
+  .owner-booking-amount-card { align-items: flex-start; flex-direction: column; gap: 5px; padding: 11px; }
+  .owner-booking-amount-card span { font-size: 12px; }
+  .owner-booking-amount-card strong { font-size: 18px; }
   .owner-booking-amount-due { grid-column: 1 / -1; }
-  .owner-booking-info { padding: 16px; }
-  .owner-booking-info-grid { gap: 0 16px; }
+  .owner-booking-info { padding: 14px; }
+  .owner-booking-customer-card { padding: 12px; }
+  .owner-booking-payment-history { padding: 12px 14px; }
+  .owner-booking-info-grid { gap: 7px; }
+  .owner-booking-payment-list { grid-template-columns: minmax(0, 1fr); }
   .owner-booking-management { grid-template-columns: minmax(0, 1fr); }
   .owner-booking-dialog-actions { padding: 12px 20px !important; }
 }
