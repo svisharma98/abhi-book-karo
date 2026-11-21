@@ -289,16 +289,20 @@
   display: flex;
   align-items: center;
   justify-content: space-between;
-  gap: 16px;
-  padding: 22px 26px !important;
+  gap: 20px;
+  padding: 24px 30px !important;
   border-bottom: 1px solid #edf0f6;
   background: linear-gradient(120deg, #f5f7ff, #fff 70%);
 }
 .owner-booking-dialog-title h5 {
   margin: 2px 0;
   color: #101b35;
-  font-size: 20px;
+  font-size: 25px;
   font-weight: 750;
+}
+.owner-booking-dialog-title .eyebrow {
+  color: #5873b2;
+  font-size: 12px;
 }
 .owner-booking-dialog-title .eyebrow { color: #5873b2; }
 .owner-booking-header-main {
@@ -317,15 +321,16 @@
 }
 .owner-booking-header-main > .MuiBox-root { min-width: 0; }
 .owner-booking-header-main .owner-booking-section-label { margin-top: 5px; }
-.owner-booking-header-date { color: #687792; font-size: 12px !important; }
+.owner-booking-header-date { color: #52627e; font-size: 15px !important; }
 .owner-booking-dialog-title .MuiIconButton-root {
   border: 1px solid #e4e9f2;
   background: #fff;
 }
-.owner-booking-reference { color: #71809d; font-size: 12px !important; }
+.owner-booking-dialog-title .MuiChip-label { font-size: 13px; }
+.owner-booking-reference { color: #71809d; font-size: 13px !important; }
 .owner-booking-dialog-content {
-  max-height: min(72vh, 760px);
-  padding: 22px 26px !important;
+  max-height: min(74vh, 820px);
+  padding: 26px 30px !important;
 }
 .owner-booking-dialog-content .booking-detail { padding-top: 0; }
 .owner-booking-service {
@@ -350,10 +355,10 @@
 }
 .owner-booking-service p:last-child { font-size: 12px; }
 .owner-booking-section-label {
-  color: #7f8ba3;
-  font-size: 10px !important;
+  color: #62728f;
+  font-size: 12px !important;
   font-weight: 750 !important;
-  letter-spacing: 1px !important;
+  letter-spacing: .8px !important;
 }
 .owner-booking-amounts {
   display: grid;
@@ -362,18 +367,18 @@
 }
 .owner-booking-amount-card {
   display: grid;
-  gap: 7px;
+  gap: 9px;
   min-width: 0;
-  padding: 15px;
+  padding: 18px;
   border: 1px solid #e9edf5;
   border-radius: 13px;
   background: #f8f9fc;
 }
-.owner-booking-amount-card span { color: #697792; font-size: 11px; }
+.owner-booking-amount-card span { color: #52627e; font-size: 14px; line-height: 1.35; }
 .owner-booking-amount-card strong {
   overflow: hidden;
   color: #172545;
-  font-size: clamp(16px, 2vw, 21px);
+  font-size: clamp(20px, 2vw, 25px);
   font-weight: 750;
   text-overflow: ellipsis;
   white-space: nowrap;
@@ -384,7 +389,7 @@
 }
 .owner-booking-amount-due strong { color: #2456c4; }
 .owner-booking-info {
-  padding: 17px;
+  padding: 20px;
   border: 1px solid #e9edf5;
   border-radius: 14px;
 }
@@ -398,15 +403,15 @@
   display: grid;
   gap: 4px;
   min-width: 0;
-  padding: 10px 0;
+  padding: 12px 0;
   border-bottom: 1px solid #f0f2f7;
 }
-.owner-booking-info-item span { color: #7b879e; font-size: 11px; }
+.owner-booking-info-item span { color: #596a86; font-size: 14px; }
 .owner-booking-info-item strong {
   overflow-wrap: anywhere;
   color: #253553;
-  font-size: 13px;
-  font-weight: 650;
+  font-size: 16px;
+  font-weight: 600;
 }
 .owner-booking-payment-list { display: grid; margin-top: 8px; }
 .owner-booking-payment-row {
@@ -419,9 +424,10 @@
 }
 .owner-booking-payment-row:last-child { border-bottom: 0; }
 .owner-booking-payment-row > div { display: grid; gap: 3px; }
-.owner-booking-payment-row strong { color: #253553; font-size: 13px; }
+.owner-booking-payment-row strong { color: #253553; font-size: 16px; }
 .owner-booking-payment-row span,
-.owner-booking-payment-row > p { color: #7b879e; font-size: 11px; }
+.owner-booking-payment-row > p { color: #596a86; font-size: 14px; }
+.owner-booking-payment-row span { color: #596a86; font-size: 14px; }
 .owner-booking-payment-row > p { margin: 0; text-align: right; overflow-wrap: anywhere; }
 .owner-booking-no-payments { margin-top: 8px !important; font-size: 12px !important; }
 .owner-booking-notes { display: grid; gap: 8px; margin-top: 15px; }
@@ -431,8 +437,8 @@
   border-radius: 10px;
   background: #f5f7fb;
   color: #394966;
-  font-size: 13px;
-  line-height: 1.55;
+  font-size: 15px;
+  line-height: 1.6;
   white-space: pre-wrap;
 }
 .owner-booking-management {
@@ -443,21 +449,24 @@
 }
 .owner-booking-form-card {
   display: grid;
-  gap: 14px;
+  gap: 16px;
   min-width: 0;
-  padding: 17px;
+  padding: 20px;
   border: 1px solid #e5eaf3;
   border-radius: 14px;
   background: #fff;
 }
 .owner-booking-form-card h6 {
   color: #152341;
-  font-size: 14px;
+  font-size: 17px;
   font-weight: 750;
 }
-.owner-booking-form-card p { font-size: 11px; line-height: 1.5; }
+.owner-booking-form-card p { font-size: 14px; line-height: 1.55; }
 .owner-booking-form-card .form-grid { grid-template-columns: minmax(0, 1fr); gap: 12px; }
 .owner-booking-form-card .MuiButton-root { justify-self: start; text-transform: none; }
+.owner-booking-form-card .MuiInputLabel-root,
+.owner-booking-form-card .MuiInputBase-input { font-size: 16px; }
+.owner-booking-form-card .MuiButton-root { min-height: 44px; font-size: 15px; }
 .owner-booking-due-preview {
   display: flex;
   align-items: center;
@@ -467,9 +476,9 @@
   border-radius: 9px;
   background: #f0f4ff;
   color: #566785;
-  font-size: 12px;
+  font-size: 14px;
 }
-.owner-booking-due-preview strong { color: #2456c4; font-size: 14px; }
+.owner-booking-due-preview strong { color: #2456c4; font-size: 16px; }
 .owner-booking-dialog-actions {
   position: sticky;
   bottom: 0;
@@ -477,29 +486,31 @@
   border-top: 1px solid #edf0f6;
   background: #fff;
 }
-.owner-booking-dialog-actions .MuiButton-root { text-transform: none; }
+.owner-booking-dialog-actions .MuiButton-root { min-height: 44px; font-size: 15px; text-transform: none; }
 
 @media (max-width: 640px) {
   .owner-booking-dialog .MuiDialog-paper { margin: 12px; border-radius: 16px; }
-  .owner-booking-dialog-title { padding: 17px 18px !important; }
-  .owner-booking-dialog-title h5 { font-size: 17px; }
-  .owner-booking-dialog-title .MuiChip-root { max-width: 100px; }
+  .owner-booking-dialog-title { gap: 10px; padding: 18px 20px !important; }
+  .owner-booking-dialog-title h5 { font-size: 21px; }
+  .owner-booking-dialog-title .MuiChip-root { max-width: 120px; }
   .owner-booking-header-main { gap: 10px; }
-  .owner-booking-header-main > img { width: 48px; height: 48px; flex-basis: 48px; }
-  .owner-booking-dialog-content { max-height: 72vh; padding: 17px 18px !important; }
-  .owner-booking-amounts { gap: 7px; }
-  .owner-booking-amount-card { gap: 5px; padding: 11px 9px; }
-  .owner-booking-amount-card span { font-size: 10px; }
-  .owner-booking-amount-card strong { font-size: 15px; }
-  .owner-booking-info { padding: 13px; }
-  .owner-booking-info-grid { gap: 0 14px; }
+  .owner-booking-header-main > img { width: 54px; height: 54px; flex-basis: 54px; }
+  .owner-booking-header-date { font-size: 14px !important; }
+  .owner-booking-dialog-content { max-height: 72vh; padding: 18px 20px !important; }
+  .owner-booking-amounts { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 9px; }
+  .owner-booking-amount-card { gap: 6px; padding: 13px; }
+  .owner-booking-amount-card span { font-size: 13px; }
+  .owner-booking-amount-card strong { font-size: 20px; }
+  .owner-booking-amount-due { grid-column: 1 / -1; }
+  .owner-booking-info { padding: 16px; }
+  .owner-booking-info-grid { gap: 0 16px; }
   .owner-booking-management { grid-template-columns: minmax(0, 1fr); }
-  .owner-booking-dialog-actions { padding: 11px 18px !important; }
+  .owner-booking-dialog-actions { padding: 12px 20px !important; }
 }
 @media (max-width: 390px) {
-  .owner-booking-dialog-title { align-items: flex-start; }
-  .owner-booking-dialog-title > .MuiStack-root { gap: 4px; }
-  .owner-booking-dialog-title .MuiChip-root { display: none; }
+  .owner-booking-dialog-title { flex-wrap: wrap; align-items: flex-start; }
+  .owner-booking-dialog-title > .MuiStack-root { gap: 4px; margin-left: auto; }
+  .owner-booking-dialog-title .MuiChip-root { max-width: 115px; }
   .owner-booking-info-grid { grid-template-columns: minmax(0, 1fr); }
-  .owner-booking-dialog-actions .MuiButton-root { padding: 6px 8px; font-size: 11px; }
+  .owner-booking-dialog-actions .MuiButton-root { padding: 6px 8px; font-size: 13px; }
 }

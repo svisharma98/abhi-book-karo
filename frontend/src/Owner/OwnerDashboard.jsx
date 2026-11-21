@@ -545,7 +545,7 @@ export function Bookings() {
               </div>
               <div className="owner-booking-amount-card">
                 <span>Paid so far</span>
-                <strong>{money(selected.advanceAmount)}</strong>
+                <strong>{money(selected.paidAmount)}</strong>
               </div>
               <div className="owner-booking-amount-card owner-booking-amount-due">
                 <span>Due amount</span>
@@ -600,7 +600,7 @@ export function Bookings() {
                 <TextField
                   label="Total booking amount (₹)"
                   type="number"
-                  inputProps={{ min: selected.advanceAmount, step: 1 }}
+                  inputProps={{ min: selected.paidAmount, step: 1 }}
                   required
                   value={bookingAmounts.totalAmount}
                   onChange={(e) => setBookingAmounts({ totalAmount: e.target.value })}
