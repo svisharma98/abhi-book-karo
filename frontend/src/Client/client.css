@@ -1,0 +1,55 @@
+.client-panel { min-height: 100vh; background: #f3f6fa; color: #17243b; }
+.client-header { min-height: 74px; padding: 12px clamp(18px, 5vw, 72px); display: flex; justify-content: space-between; align-items: center; background: #fff; border-bottom: 1px solid #e6ebf2; }
+.client-brand { display: flex; align-items: center; gap: 11px; font-size: 17px; font-weight: 800; color: #18395b; }
+.client-brand-mark { width: 37px; height: 37px; display: grid; place-items: center; border-radius: 12px; background: #b8dbcd; font-family: Georgia, serif; font-size: 24px; }
+.client-header .MuiAvatar-root { width: 34px; height: 34px; color: #18395b; background: #e4efe9; }
+.client-header-user { min-width: 100px; }
+.client-header-user p:first-child { font-size: 12px; }
+.client-header-user p:last-child { color: #7a8798; }
+.client-content { display: grid; grid-template-columns: 220px minmax(0, 1fr); gap: 35px; max-width: 1440px; margin: auto; padding: 38px clamp(18px, 5vw, 72px); }
+.client-nav { display: flex; flex-direction: column; gap: 8px; position: sticky; top: 24px; align-self: start; padding: 12px; background: #fff; border: 1px solid #e6ebf2; border-radius: 15px; }
+.client-nav a { display: flex; align-items: center; gap: 10px; padding: 12px; border-radius: 9px; color: #5d6b7d; font-size: 13px; font-weight: 600; }
+.client-nav a svg { width: 18px; height: 18px; }
+.client-nav a.active { color: #18395b; background: #e8f2ed; }
+.client-content main { min-width: 0; }
+.client-title { margin: 3px 0 25px; }
+.client-title h4 { margin: 6px 0; font-family: Georgia, serif; color: #172c48; }
+.client-eyebrow, .client-reference { color: #2b8064 !important; font-size: 10px !important; font-weight: 800 !important; letter-spacing: 1.2px !important; text-transform: uppercase; }
+.client-metrics { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 14px; margin-bottom: 18px; }
+.client-metrics .MuiPaper-root { padding: 18px; border: 1px solid #e6ebf2; border-radius: 13px; }
+.client-metrics p { color: #778497; font-size: 12px; }
+.client-metrics strong { display: block; margin-top: 7px; color: #18395b; font-size: 26px; }
+.client-requests { padding: 22px; border: 1px solid #e6ebf2; border-radius: 15px; }
+.client-requests-heading { margin-bottom: 16px; }
+.client-requests-heading h6 { color: #18395b; font-weight: 800; }
+.client-requests-heading p { font-size: 12px; }
+.client-booking-list { display: grid; gap: 10px; }
+.client-booking { display: flex; align-items: center; gap: 15px; padding: 12px; border: 1px solid #ebeff4; border-radius: 12px; }
+.client-booking > img { width: 66px; height: 66px; object-fit: cover; border-radius: 9px; }
+.client-booking-info { flex: 1; min-width: 0; }
+.client-booking-info h6 { color: #18395b; font-size: 15px; font-weight: 700; }
+.client-booking-info > p:last-child { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; font-size: 11px; }
+.client-booking .MuiChip-root { text-transform: capitalize; }
+.client-offer { color: #a16e1c; font-size: 12px; font-weight: 700; }
+.client-empty { min-height: 190px; display: flex; align-items: center; justify-content: center; flex-direction: column; gap: 9px; text-align: center; color: #718095; }
+.client-empty > svg { width: 32px; height: 32px; color: #2b8064; }
+.client-empty h6 { color: #18395b; font-weight: 700; }
+@media (max-width: 760px) {
+  .client-content { grid-template-columns: 1fr; gap: 20px; padding-top: 22px; }
+  .client-nav { position: static; flex-direction: row; overflow-x: auto; }
+  .client-nav a { white-space: nowrap; }
+}
+@media (max-width: 540px) {
+  .client-header { padding: 12px 14px; }
+  .client-header-user, .client-header .MuiAvatar-root { display: none; }
+  .client-header .MuiButton-root { min-width: auto; }
+  .client-header .MuiButton-startIcon { margin: 0; }
+  .client-header .MuiButton-startIcon + span { display: none; }
+  .client-content { padding-inline: 14px; }
+  .client-metrics { gap: 8px; }
+  .client-metrics .MuiPaper-root { padding: 12px; }
+  .client-booking { align-items: flex-start; gap: 9px; }
+  .client-booking > img { width: 48px; height: 48px; }
+  .client-booking .MuiChip-root { display: none; }
+  .client-booking .MuiButton-root { min-width: 32px; padding: 3px; }
+}

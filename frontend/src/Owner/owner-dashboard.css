@@ -1,0 +1,280 @@
+.owner-shell { display: flex; min-height: calc(100vh - 76px); background: #f5f6fa; }
+.owner-shell .sidebar { width: 246px; flex: 0 0 246px; background: #fff; border-right: 1px solid #e9ebf1; }
+.owner-shell .owner-main { min-width: 0; flex: 1; }
+.owner-shell .sidebar { min-height: calc(100vh - 76px); display: flex; flex-direction: column; padding: 23px 15px; }
+.owner-shell .brand { display: inline-flex; gap: 10px; align-items: center; font-weight: 700; font-size: 16px; line-height: 1.05; color: var(--navy); }
+.owner-shell .brand-mark { width: 39px; height: 39px; display: grid; place-items: center; color: var(--navy); background: var(--gold); border-radius: 12px 12px 12px 3px; font-family: var(--serif); font-size: 24px; }
+.owner-shell .brand small { display: block; font-size: 9px; font-weight: 500; color: #8990a0; letter-spacing: 1.5px; text-transform: uppercase; margin-top: 5px; }
+.owner-shell .sidebar-label { font-size: 9px !important; font-weight: 700 !important; letter-spacing: 1.2px !important; color: #98a0ae; padding: 0 12px; margin-bottom: 10px !important; }
+.owner-shell .sidebar nav { display: flex; flex-direction: column; gap: 4px; }
+.owner-shell .nav-link { display: flex; align-items: center; gap: 10px; color: #687285; padding: 11px 13px; font-size: 13px; font-weight: 500; border-radius: 10px; }
+.owner-shell .nav-link svg { width: 19px; height: 19px; color: #9aa2b0; }
+.owner-shell .nav-link.active { background: #f0f3f9; color: var(--navy); font-weight: 700; }
+.owner-shell .nav-link.active svg { color: var(--blue); }
+.owner-shell .sidebar-bottom { margin-top: auto; }
+.owner-shell .owner-profile { padding: 18px 3px 3px; }
+.owner-shell .owner-profile .MuiAvatar-root { width: 34px; height: 34px; color: var(--navy); background: #f5e8cd; }
+.owner-shell .topbar { position: sticky; top: 0; z-index: 5; height: 62px; display: flex; align-items: center; padding: 0 26px; background: rgba(255,255,255,.92); color: var(--navy); border-bottom: 1px solid #e9ebf1; backdrop-filter: blur(12px); }
+.owner-shell .topbar > p { font-size: 13px; }
+.owner-shell .topbar .MuiChip-root { background: #f5f6fa; }
+.owner-shell .topbar .MuiAvatar-root { width: 25px; height: 25px; font-size: 12px; background: #dce5f7; color: var(--blue); }
+.owner-shell .page-content { max-width: 1500px; margin: auto; padding: 32px; }
+.owner-shell .page-title { margin-bottom: 25px; }
+.owner-shell .page-title h4 { font-family: var(--serif); font-weight: 600; color: var(--navy); margin: 4px 0; }
+.owner-shell .page-title p:last-child { font-size: 13px; }
+.owner-shell .metric-grid { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 16px; }
+.owner-shell .metric-card { padding: 19px !important; border: 1px solid #eceef2; min-width: 0; }
+.owner-shell .metric-icon { width: 36px; height: 36px; border-radius: 11px; background: #f1f4fa; color: var(--blue); display: grid; place-items: center; margin-bottom: 12px; }
+.owner-shell .metric-icon svg { width: 19px; }
+.owner-shell .metric-card > p:nth-of-type(2) { font-size: 12px; margin-top: 7px; }
+.owner-shell .metric-value { font-size: 27px !important; font-weight: 700 !important; color: var(--navy); margin-top: 3px !important; }
+.owner-shell .panel { padding: 22px !important; border: 1px solid #eceef2; }
+.owner-shell .panel h6 { color: var(--navy); font-weight: 700; }
+.owner-shell .panel > p { font-size: 12px; }
+.owner-shell .recent-panel { margin-top: 17px; }
+.owner-shell .calendar-panel { margin-bottom: 17px; }
+.owner-shell .calendar-panel .fc { --fc-border-color: #edf0f4; --fc-button-bg-color: #101b35; --fc-button-border-color: #101b35; --fc-button-hover-bg-color: #2456a6; --fc-today-bg-color: #fbf7ed; color: #273148; font-family: "DM Sans", sans-serif; font-size: 12px; }
+.owner-shell .calendar-panel .fc .fc-toolbar-title { font-family: var(--serif); font-size: 21px; }
+.owner-shell .calendar-panel .fc .fc-button { text-transform: capitalize; font-size: 11px; box-shadow: none; }
+.owner-shell .calendar-panel .fc .fc-daygrid-event { position: relative; overflow: visible; white-space: normal; font-size: 10px; padding: 2px 3px; }
+.owner-shell .calendar-event { position: relative; display: block; }
+.owner-shell .calendar-event-label { display: block; overflow: hidden; white-space: nowrap; text-overflow: ellipsis; }
+.owner-shell .calendar-panel .fc .fc-daygrid-event:hover { z-index: 8; }
+.owner-shell .table-scroll { overflow-x: auto; margin: 9px -2px 0; }
+.owner-shell table { width: 100%; min-width: 760px; border-collapse: collapse; }
+.owner-shell th { padding: 5px 6px; text-align: left; color: #8991a1; font-size: 10px; text-transform: uppercase; letter-spacing: .6px; white-space: nowrap; }
+.owner-shell td { padding: 0px; border-top: 1px solid #eef0f4; font-size: 12px; vertical-align: middle; }
+.owner-shell td small { display: block; color: #81899a; font-size: 10px; margin-top: 4px; }
+.owner-shell .empty-state { min-height: 130px; display: flex; align-items: center; justify-content: center; gap: 10px; color: #7d8697; }
+.owner-shell .empty-state svg { color: var(--gold); }
+.owner-shell .booking-detail { padding-top: 5px; }
+.owner-shell .decision-actions { padding: 12px 24px 20px !important; }
+.owner-shell .service-cell { display: flex; align-items: center; gap: 11px; min-width: 200px; }
+.owner-shell .service-cell .MuiAvatar-root { width: 42px; height: 42px; }
+.owner-shell .service-cell small { display: block; color: #81899a; font-size: 10px; margin-top: 3px; }
+.owner-shell .form-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 13px; }
+.owner-shell .check-label { display: flex; align-items: center; gap: 9px; font-size: 13px; }
+.owner-shell .loading { min-height: 240px; display: flex; gap: 12px; align-items: center; justify-content: center; flex-direction: column; }
+.owner-shell .mobile-menu { display: none !important; }
+.owner-shell .sidebar-backdrop { display: none; }
+
+@media (max-width: 1100px) {
+  .owner-shell .metric-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+}
+@media (max-width: 760px) {
+  .owner-shell { min-height: calc(100vh - 65px); }
+  .owner-shell .sidebar { display: none; position: fixed; inset: 0 auto 0 0; z-index: 30; width: 246px; min-height: 100vh; box-shadow: 10px 0 30px rgba(16,27,53,.12); }
+  .owner-shell .sidebar.sidebar-open { display: flex; }
+  .owner-shell .sidebar-backdrop { display: block; position: fixed; inset: 0; z-index: 25; width: 100%; border: 0; background: rgba(16,27,53,.36); }
+  .owner-shell .owner-main { margin-left: 0; }
+  .owner-shell .topbar { padding: 0 14px; }
+  .owner-shell .topbar > p, .owner-shell .topbar > .MuiChip-root { display: none; }
+  .owner-shell .topbar .mobile-menu { display: inline-flex !important; }
+  .owner-shell .page-content { padding: 22px 16px; }
+  .owner-shell .calendar-panel { padding: 12px !important; }
+  .owner-shell .calendar-panel .fc .fc-toolbar { flex-wrap: wrap; gap: 8px; }
+  .owner-shell .calendar-panel .fc .fc-toolbar-title { font-size: 17px; }
+}
+@media (max-width: 520px) {
+  .owner-shell .metric-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 9px; }
+  .owner-shell .metric-card, .owner-shell .panel { padding: 13px !important; }
+  .owner-shell .metric-value { font-size: 21px !important; }
+  .owner-shell .page-title h4 { font-size: 27px; }
+  .owner-shell .page-title > .MuiButton-root { align-self: flex-start; }
+  .owner-shell .form-grid { grid-template-columns: 1fr; }
+}
+
+.owner-shell .booking-calendar-heading { display: flex; align-items: center; gap: 16px; margin-bottom: 14px; }
+.owner-shell .booking-calendar-heading-icon { display: grid; flex: 0 0 60px; width: 60px; height: 60px; place-items: center; border-radius: 17px; background: #2456e8; color: #fff; box-shadow: 0 7px 15px rgba(36,86,232,.2); }
+.owner-shell .booking-calendar-heading-icon svg { width: 34px; height: 34px; }
+.owner-shell .booking-calendar-heading h4 { margin: 0 0 3px; color: #101b35; font-family: "DM Sans", sans-serif; font-size: 27px; font-weight: 750; letter-spacing: -.7px; }
+.owner-shell .booking-calendar-heading p { color: #697899; font-size: 14px; }
+.owner-shell .booking-calendar-count { margin-left: auto; padding: 2px 8px; border-radius: 999px; background: #edf2ff; color: #234797; font-weight: 700; }
+.owner-shell .booking-calendar-count .MuiChip-icon { color: #2456e8; }
+.owner-shell .calendar-controls-row { display: flex; align-items: center; justify-content: space-between; gap: 12px; margin-bottom: 14px; }
+.owner-shell .calendar-controls-row .calendar-key { flex: 1; margin: 0; }
+.owner-shell .booking-calendar-filter { width: min(100%, 280px); flex: 0 0 auto; }
+.owner-shell .booking-calendar-filter .MuiOutlinedInput-root { border-radius: 10px; background: #fff; }
+.owner-shell .calendar-panel { padding: 18px !important; overflow: hidden; border: 1px solid #e1e8f7; border-radius: 17px; background: #fff; box-shadow: 0 10px 28px rgba(32,56,112,.07) !important; }
+.owner-shell .calendar-key { display: flex; flex-wrap: wrap; align-items: center; gap: 9px 22px; margin-bottom: 14px; padding: 11px 16px; border-radius: 12px; background: #f0f4ff; }
+.owner-shell .calendar-key > span { display: inline-flex; align-items: center; gap: 8px; color: #27395e; font-size: 12px; }
+.owner-shell .calendar-key-dot { width: 13px; height: 13px; flex: 0 0 13px; border-radius: 50%; }
+.owner-shell .calendar-key-available { background: #2456e8; }
+.owner-shell .calendar-key-booked { background: #19ad58; }
+.owner-shell .calendar-key-unavailable { background: #657393; }
+.owner-shell .booking-calendar-layout { display: grid; grid-template-columns: minmax(0, 1fr) minmax(245px, 30%); align-items: start; gap: 20px; }
+.owner-shell .booking-calendar-grid { width: 100%; min-width: 0; max-width: 100%; overflow: hidden; }
+.owner-shell .booking-calendar-grid .fc,
+.owner-shell .booking-calendar-grid .fc-view-harness,
+.owner-shell .booking-calendar-grid .fc-view-harness-active { width: 100%; min-width: 0; max-width: 100%; }
+.owner-shell .booking-calendar-grid .fc table,
+.owner-shell .booking-calendar-grid .fc .fc-scrollgrid,
+.owner-shell .booking-calendar-grid .fc .fc-scrollgrid-section > table,
+.owner-shell .booking-calendar-grid .fc .fc-scrollgrid-sync-table { width: 100% !important; min-width: 0 !important; max-width: 100%; table-layout: fixed; }
+.owner-shell .booking-calendar-grid .fc { --fc-border-color: #e4e9f5; --fc-button-bg-color: #fff; --fc-button-border-color: #e4e9f5; --fc-button-text-color: #172342; --fc-button-hover-bg-color: #edf2ff; --fc-button-hover-border-color: #d7e1fb; --fc-button-active-bg-color: #2456e8; --fc-button-active-border-color: #2456e8; --fc-today-bg-color: #f5f7ff; --fc-page-bg-color: #fff; color: #172342; font-family: "DM Sans", sans-serif; font-size: 12px; }
+.owner-shell .booking-calendar-toolbar { display: grid; grid-template-columns: 1fr auto 1fr; align-items: center; gap: 8px; margin: 0 0 14px; }
+.owner-shell .booking-calendar-navigation { display: flex; align-items: center; gap: 5px; }
+.owner-shell .booking-calendar-navigation .MuiIconButton-root { width: 36px; height: 36px; border: 1px solid #e4e9f5; border-radius: 10px; color: #172342; }
+.owner-shell .booking-calendar-navigation .MuiButton-root { min-width: 0; min-height: 36px; margin-left: 8px; padding: 0 13px; border: 1px solid #e4e9f5; border-radius: 10px; color: #172342; font-size: 11px; text-transform: none; }
+.owner-shell .booking-calendar-month-title { display: flex; min-width: 0; align-items: center; justify-content: center; gap: 5px; }
+.owner-shell .booking-calendar-month-title h2 { margin: 0; color: #101b35; font-family: "DM Sans", sans-serif; font-size: 21px; font-weight: 750; letter-spacing: -.45px; line-height: 1.2; white-space: nowrap; }
+.owner-shell .booking-calendar-month-title .MuiIconButton-root { width: 32px; height: 32px; flex: 0 0 32px; border: 1px solid #e4e9f5; border-radius: 9px; color: #2456e8; }
+.owner-shell .booking-calendar-month-title .MuiSvgIcon-root { width: 19px; height: 19px; }
+.owner-shell .booking-calendar-month-view { justify-self: end; min-width: 74px; min-height: 36px; border-radius: 10px; background: #2456e8; font-size: 11px; font-weight: 600; text-transform: none; }
+.owner-shell .booking-calendar-month-view:hover { background: #1948d0; }
+.owner-shell .booking-calendar-grid .fc .fc-toolbar { align-items: center; margin: 0 0 14px; }
+.owner-shell .booking-calendar-grid .fc .fc-toolbar-chunk:nth-child(2) { display: inline-flex !important; width: max-content; max-width: 100%; flex-flow: row nowrap; align-items: center; justify-content: center; gap: 5px; margin-inline: auto; }
+.owner-shell .booking-calendar-grid .fc .fc-toolbar-title { display: block; flex: 0 1 auto; width: auto; margin: 0; color: #101b35; font-family: "DM Sans", sans-serif; font-size: 21px; font-weight: 750; letter-spacing: -.45px; white-space: nowrap; }
+.owner-shell .booking-calendar-grid .fc .fc-button { min-height: 35px; padding: 0 11px; border-radius: 10px; font-size: 11px; font-weight: 600; box-shadow: none; }
+.owner-shell .booking-calendar-grid .fc .fc-jumpToDate-button { display: inline-flex; width: 30px; min-height: 30px; flex: 0 0 30px; align-items: center; justify-content: center; margin: 0; padding: 0; overflow: hidden; color: #2456e8; font-size: 0; vertical-align: middle; }
+.owner-shell .booking-calendar-grid .fc .fc-jumpToDate-button::before { display: block; width: 18px; height: 18px; margin: auto; background: currentColor; content: ""; -webkit-mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath d='M19 4h-1V2h-2v2H8V2H6v2H5c-1.66 0-3 1.34-3 3v12c0 1.66 1.34 3 3 3h14c1.66 0 3-1.34 3-3V7c0-1.66-1.34-3-3-3zm1 15c0 .55-.45 1-1 1H5c-.55 0-1-.45-1-1V10h16v9zM4 8V7c0-.55.45-1 1-1h1v2h2V6h8v2h2V6h1c.55 0 1 .45 1 1v1H4zm2 4h4v4H6zm6 0h4v4h-4z'/%3E%3C/svg%3E") center/contain no-repeat; mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath d='M19 4h-1V2h-2v2H8V2H6v2H5c-1.66 0-3 1.34-3 3v12c0 1.66 1.34 3 3 3h14c1.66 0 3-1.34 3-3V7c0-1.66-1.34-3-3-3zm1 15c0 .55-.45 1-1 1H5c-.55 0-1-.45-1-1V10h16v9zM4 8V7c0-.55.45-1 1-1h1v2h2V6h8v2h2V6h1c.55 0 1 .45 1 1v1H4zm2 4h4v4H6zm6 0h4v4h-4z'/%3E%3C/svg%3E") center/contain no-repeat; }
+.owner-shell .calendar-date-picker-input { position: fixed; z-index: -1; width: 1px; height: 1px; opacity: 0; }
+.owner-shell .booking-calendar-grid .fc .fc-prev-button,
+.owner-shell .booking-calendar-grid .fc .fc-next-button { width: 36px; padding: 4px; }
+.owner-shell .booking-calendar-grid .fc .fc-toolbar-chunk:first-child .fc-button-group { margin-right: 7px; }
+.owner-shell .booking-calendar-grid .fc .fc-today-button { padding: 0 14px; }
+.owner-shell .booking-calendar-grid .fc .fc-button-primary:not(:disabled).fc-button-active { color: #fff; }
+.owner-shell .booking-calendar-grid .fc .fc-col-header-cell { background: #f0f3fc; }
+.owner-shell .booking-calendar-grid .fc .fc-col-header-cell-cushion { padding: 11px 4px; color: #1d315d; font-size: 12px; font-weight: 700; text-decoration: none; text-transform: none; }
+.owner-shell .booking-calendar-grid .fc .fc-daygrid-day-frame { height: auto; min-height: 72px; overflow: visible; transition: background-color .15s ease; }
+.owner-shell .booking-calendar-grid .fc .fc-day-other .fc-daygrid-day-number { color: #aab3c8; }
+.owner-shell .booking-calendar-grid .fc .fc-daygrid-day-events { min-height: 18px !important; margin-bottom: 0 !important; overflow: hidden; }
+.owner-shell .booking-calendar-grid .fc .fc-daygrid-day-frame::before { display: none; content: none; }
+.owner-shell .booking-calendar-grid .fc .fc-day-sat,
+.owner-shell .booking-calendar-grid .fc .fc-day-sun { background: #fbfcff; }
+.owner-shell .booking-calendar-grid .fc .fc-daygrid-day:not(.booking-day-booked) { cursor: pointer; }
+.owner-shell .booking-calendar-grid .fc .fc-daygrid-day:hover .fc-daygrid-day-frame { background: #f8faff; }
+.owner-shell .booking-calendar-grid .fc .fc-daygrid-day-top { min-height: 34px; align-items: flex-start; justify-content: center; padding: 9px 2px 4px; }
+.owner-shell .booking-calendar-grid .fc .fc-daygrid-day-top > .fc-daygrid-day-number { display: flex; width: 100%; height: 30px; align-items: center; justify-content: center; margin: 0; padding: 0; color: #172342; font-size: 12px; font-weight: 600; text-decoration: none; }
+.owner-shell .booking-calendar-grid .fc .booking-day-number { display: grid; width: 24px; height: 24px; flex: 0 0 24px; padding: 0; place-items: center; border-radius: 50%; line-height: 1; }
+.owner-shell .booking-calendar-grid .fc .fc-day-today .booking-day-number { background: #e7edff; color: #2456e8; font-weight: 700; }
+.owner-shell .booking-calendar-grid .fc .booking-day-booked .fc-daygrid-day-frame { background: #f1faf4; }
+.owner-shell .booking-calendar-grid .fc .booking-day-booked .booking-day-number { width: 28px; height: 28px; flex-basis: 28px; border-radius: 50%; background: #19ad58; color: #fff; font-weight: 700; }
+.owner-shell .booking-calendar-grid .fc .booking-day-booked:hover .fc-daygrid-day-frame { background: #eaf7ef; }
+.owner-shell .booking-calendar-grid .fc .booking-selected-day .fc-daygrid-day-frame { background: #edf2ff; box-shadow: inset 0 0 0 1px #8daeff; }
+.owner-shell .booking-calendar-grid .fc .booking-day-booked.booking-selected-day .fc-daygrid-day-frame { background: #edf2ff; box-shadow: inset 0 0 0 1px #8daeff; }
+.owner-shell .booking-calendar-grid .fc .booking-selected-day .booking-day-number { width: 32px; height: 32px; flex-basis: 32px; padding: 4px; border-radius: 50% !important; background: #2456e8; color: #fff; font-weight: 700; line-height: 1; }
+.owner-shell .booking-calendar-grid .fc .booked-day-mark,
+.owner-shell .booking-calendar-grid .fc .calendar-event-status { display: flex; width: fit-content; max-width: 100%; min-width: 0; min-height: 16px; box-sizing: border-box; align-items: center; justify-content: center; gap: 3px; margin: 0 auto; padding: 1px 4px; overflow: hidden; border-radius: 999px; font-size: 9px; font-weight: 700; line-height: 1.1; white-space: nowrap; }
+.owner-shell .booking-calendar-grid .fc .booked-day-mark { background: #e8f7ee; color: #176f43; }
+.owner-shell .booking-calendar-grid .fc .booked-day-mark svg { flex: 0 0 12px; width: 12px; height: 12px; color: #19ad58; }
+.owner-shell .booking-calendar-grid .fc .calendar-event-status { background: #edf2ff; color: #2456e8; }
+.owner-shell .booking-calendar-grid .fc .calendar-event-status-rejected { background: #eef0f4; color: #53617b; }
+.owner-shell .booking-calendar-grid .fc .calendar-event-status i { width: 6px; height: 6px; flex: 0 0 6px; border-radius: 50%; background: currentColor; }
+.owner-shell .booking-calendar-grid .fc .calendar-event-status > span { display: block; min-width: 0; flex: 0 1 auto; overflow: hidden; text-overflow: ellipsis; }
+.owner-shell .booking-calendar-grid .fc .fc-daygrid-day-events > * { min-width: 0; max-width: 100%; }
+.owner-shell .booking-calendar-grid .fc .fc-daygrid-event { display: block; width: 100%; min-width: 0; max-width: 100%; min-height: 16px; box-sizing: border-box; padding: 0 2px; overflow: hidden; border: 0 !important; background: transparent !important; cursor: pointer; }
+.owner-shell .booking-calendar-grid .fc .fc-daygrid-event .fc-event-main,
+.owner-shell .booking-calendar-grid .fc .fc-daygrid-event .fc-event-main-frame { width: 100%; min-width: 0; max-width: 100%; box-sizing: border-box; overflow: hidden; border: 0 !important; background: transparent !important; }
+.owner-shell .booking-calendar-grid .fc .fc-daygrid-event .fc-event-main { display: flex; width: 100%; min-width: 0; max-width: 100%; box-sizing: border-box; align-items: center; overflow: hidden; padding: 1px 2px; background: transparent !important; color: #172342 !important; }
+.owner-shell .booking-calendar-grid .fc .fc-daygrid-event:hover { z-index: 8; }
+.owner-shell .calendar-event { display: flex; width: 100%; min-width: 0; max-width: 100%; min-height: 12px; align-items: center; justify-content: center; overflow: hidden; }
+.owner-shell .calendar-event-dot { display: block; width: 8px; height: 8px; border-radius: 50%; background: #657393; }
+.owner-shell .calendar-event-accepted .calendar-event-dot { background: #19ad58; }
+.owner-shell .calendar-event-pending .calendar-event-dot { background: #2456e8; }
+.owner-shell .calendar-event-details { display: grid; width: 100%; gap: 2px; overflow: hidden; padding: 4px 6px; border-radius: 6px; background: #edf2ff; color: #2456e8; line-height: 1.3; }
+.owner-shell .calendar-event-details.calendar-event-accepted { background: #e9f5ef; color: #176f43; }
+.owner-shell .calendar-event-details.calendar-event-rejected { background: #eef0f4; color: #53617b; }
+.owner-shell .calendar-event-details .calendar-event-time { font-size: 9px; font-weight: 700; }
+.owner-shell .calendar-event-details .calendar-event-label { display: block; overflow: hidden; font-size: 10px; text-overflow: ellipsis; white-space: nowrap; }
+.owner-shell .booking-details-panel { min-width: 0; padding-bottom: 2px; }
+.owner-shell .booking-detail-status { display: flex; min-height: 78px; align-items: center; gap: 13px; padding: 13px 15px; border-radius: 13px; background: #eef3ff; }
+.owner-shell .booking-detail-status > span { display: grid; flex: 0 0 36px; width: 36px; height: 36px; place-items: center; border-radius: 50%; background: #19ad58; color: #fff; }
+.owner-shell .booking-detail-status > span svg { width: 24px; height: 24px; }
+.owner-shell .booking-detail-status > div { display: grid; gap: 3px; min-width: 0; }
+.owner-shell .booking-detail-status strong { color: #101b35; font-size: 14px; }
+.owner-shell .booking-detail-status small { color: #304468; font-size: 12px; }
+.owner-shell .booking-detail-status-pending > span, .owner-shell .booking-detail-status-available > span { background: #2456e8; }
+.owner-shell .booking-detail-status-rejected > span { background: #657393; }
+.owner-shell .booking-detail-section { margin-top: 14px; padding: 0 2px 13px; border-bottom: 1px solid #e8ecf5; }
+.owner-shell .booking-detail-section h3 { display: flex; align-items: center; gap: 8px; margin: 0 0 11px; color: #101b35; font-size: 13px; font-weight: 750; }
+.owner-shell .booking-detail-section h3 svg { width: 17px; height: 17px; color: #2456e8; }
+.owner-shell .booking-contact-row { display: flex; min-width: 0; align-items: center; gap: 9px; margin: 9px 0; color: #455475; font-size: 11px; }
+.owner-shell .booking-contact-row > svg { flex: 0 0 15px; width: 15px; height: 15px; color: #66779d; }
+.owner-shell .booking-contact-row > span { overflow-wrap: anywhere; }
+.owner-shell .booking-contact-row > strong { overflow: hidden; color: #263757; text-overflow: ellipsis; white-space: nowrap; }
+.owner-shell .booking-contact-row .MuiAvatar-root { width: 25px; height: 25px; flex: 0 0 25px; background: #edf2ff; color: #2456e8; font-size: 11px; }
+.owner-shell .booking-detail-row { display: flex; align-items: flex-start; justify-content: space-between; gap: 8px; margin: 8px 0; color: #647292; font-size: 11px; }
+.owner-shell .booking-detail-row strong { color: #263757; font-weight: 600; text-align: right; }
+.owner-shell .booking-detail-venue { justify-content: flex-start; color: #66779d; }
+.owner-shell .booking-detail-venue svg { flex: 0 0 15px; width: 15px; height: 15px; }
+.owner-shell .booking-detail-venue strong { text-align: left; }
+.owner-shell .booking-detail-notes { margin: 0; padding: 10px; border-radius: 9px; background: #f0f4ff; color: #263757; font-size: 11px; line-height: 1.5; }
+.owner-shell .booking-full-details-button { min-height: 40px; margin-top: 14px; border-radius: 10px; background: #2456e8; font-size: 12px; font-weight: 700; box-shadow: 0 6px 12px rgba(36,86,232,.16); }
+.owner-shell .booking-full-details-button:hover { background: #1948d0; }
+.owner-shell .booking-available-message { margin: 15px 3px 4px; color: #647292; font-size: 12px; line-height: 1.55; }
+.owner-shell .calendar-note { display: flex; align-items: center; gap: 8px; margin-top: 13px; padding: 10px 13px; border-radius: 10px; background: #edf2ff; color: #24395f; font-size: 11px; }
+.owner-shell .calendar-note > span { display: grid; flex: 0 0 18px; width: 18px; height: 18px; place-items: center; border-radius: 50%; background: #2456e8; color: #fff; font-size: 12px; font-weight: 700; }
+.owner-shell .calendar-note > svg { width: 16px; height: 16px; color: #19ad58; }
+
+@media (max-width: 1100px) {
+  .owner-shell .booking-calendar-layout { grid-template-columns: minmax(0, 1fr); }
+  .owner-shell .booking-details-panel { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 0 16px; padding-top: 15px; border-top: 1px solid #e8ecf5; }
+  .owner-shell .booking-detail-status, .owner-shell .booking-available-message, .owner-shell .booking-full-details-button { grid-column: 1 / -1; }
+  .owner-shell .booking-full-details-button { margin-top: 0; }
+}
+@media (max-width: 760px) {
+  .owner-shell .booking-calendar-heading { align-items: flex-start; gap: 11px; }
+  .owner-shell .booking-calendar-heading-icon { flex-basis: 48px; width: 48px; height: 48px; border-radius: 14px; }
+  .owner-shell .booking-calendar-heading-icon svg { width: 28px; height: 28px; }
+  .owner-shell .booking-calendar-heading h4 { font-size: 22px; }
+  .owner-shell .booking-calendar-heading p { font-size: 12px; }
+  .owner-shell .booking-calendar-count { align-self: center; font-size: 10px; }
+  .owner-shell .calendar-panel { padding: 12px !important; }
+  .owner-shell .booking-calendar-toolbar { grid-template-columns: auto minmax(0, 1fr) auto; grid-template-areas: "navigation title view"; gap: 4px; }
+  .owner-shell .booking-calendar-navigation { grid-area: navigation; gap: 3px; }
+  .owner-shell .booking-calendar-navigation .MuiIconButton-root { width: 31px; height: 31px; }
+  .owner-shell .booking-calendar-navigation .MuiButton-root { min-height: 31px; margin-left: 5px; padding: 0 8px; font-size: 10px; }
+  .owner-shell .booking-calendar-month-title { grid-area: title; gap: 2px; }
+  .owner-shell .booking-calendar-month-title h2 { font-size: 16px; }
+  .owner-shell .booking-calendar-month-title .MuiIconButton-root { width: 28px; height: 28px; flex-basis: 28px; }
+  .owner-shell .booking-calendar-month-view { grid-area: view; min-width: 62px; min-height: 31px; padding: 0 8px; font-size: 10px; }
+  .owner-shell .calendar-controls-row { align-items: stretch; flex-direction: column; }
+  .owner-shell .booking-calendar-filter { order: -1; width: 100%; }
+  .owner-shell .booking-calendar-grid .fc .fc-toolbar { display: grid; grid-template-columns: auto minmax(0, 1fr) auto; grid-template-areas: "left title right"; align-items: center; gap: 4px; }
+  .owner-shell .booking-calendar-grid .fc .fc-toolbar-chunk:nth-child(1) { grid-area: left; min-width: 0; }
+  .owner-shell .booking-calendar-grid .fc .fc-toolbar-chunk:nth-child(2) { grid-area: title; min-width: 0; }
+  .owner-shell .booking-calendar-grid .fc .fc-toolbar-chunk:nth-child(3) { grid-area: right; min-width: 0; }
+  .owner-shell .booking-calendar-grid .fc .fc-toolbar-title { min-width: 0; margin: 0; overflow: hidden; text-align: center; text-overflow: ellipsis; white-space: nowrap; font-size: 17px; }
+  .owner-shell .booking-calendar-grid .fc .fc-toolbar-chunk:first-child .fc-button-group { margin-right: 3px; }
+  .owner-shell .booking-calendar-grid .fc .fc-button { min-height: 31px; padding: 0 6px; font-size: 10px; }
+  .owner-shell .booking-calendar-grid .fc .fc-prev-button,
+  .owner-shell .booking-calendar-grid .fc .fc-next-button { width: 30px; padding: 3px; }
+  .owner-shell .booking-calendar-grid .fc .fc-today-button { padding: 0 6px; }
+  .owner-shell .booking-calendar-grid .fc .fc-jumpToDate-button { width: 27px; min-height: 27px; flex-basis: 27px; }
+  .owner-shell .booking-calendar-grid .fc .fc-daygrid-day-frame { height: auto; min-height: 64px; }
+  .owner-shell .booking-calendar-grid .fc .fc-col-header-cell-cushion { padding: 8px 2px; font-size: 10px; }
+  .owner-shell .booking-calendar-grid .fc .fc-daygrid-day-top { min-height: 30px; }
+  .owner-shell .booking-calendar-grid .fc .fc-daygrid-day-top > .fc-daygrid-day-number { height: 28px; font-size: 10px; }
+  .owner-shell .booking-calendar-grid .fc .booking-day-number { width: 21px; height: 21px; flex-basis: 21px; font-size: 10px; }
+  .owner-shell .booking-calendar-grid .fc .booking-day-booked .booking-day-number { width: 24px; height: 24px; flex-basis: 24px; }
+  .owner-shell .booking-calendar-grid .fc .booking-selected-day .booking-day-number { display: grid; width: 29px; height: 29px; flex-basis: 29px; padding: 4px; border-radius: 50% !important; }
+  .owner-shell .booking-calendar-grid .fc .booked-day-mark { margin-top: 0; }
+  .owner-shell .booking-calendar-grid .fc .booked-day-mark svg { width: 12px; height: 12px; }
+  .owner-shell .booking-calendar-grid .fc .booked-day-mark,
+  .owner-shell .booking-calendar-grid .fc .calendar-event-status { min-height: 14px; gap: 2px; padding: 1px 3px; font-size: 8px; }
+  .owner-shell .booking-calendar-grid .fc .booked-day-mark svg { flex-basis: 10px; width: 10px; height: 10px; }
+  .owner-shell .booking-details-panel { grid-template-columns: minmax(0, 1fr); }
+  .owner-shell .booking-detail-status, .owner-shell .booking-available-message, .owner-shell .booking-full-details-button { grid-column: auto; }
+}
+@media (max-width: 420px) {
+  .owner-shell .booking-calendar-heading { flex-wrap: wrap; }
+  .owner-shell .booking-calendar-count { margin-left: 59px; }
+  .owner-shell .calendar-controls-row { align-items: stretch; flex-direction: column; }
+  .owner-shell .booking-calendar-filter { width: 100%; }
+  .owner-shell .booking-calendar-toolbar { grid-template-columns: auto minmax(0, 1fr) auto; gap: 2px; }
+  .owner-shell .booking-calendar-navigation { gap: 1px; }
+  .owner-shell .booking-calendar-navigation .MuiIconButton-root { width: 27px; height: 28px; padding: 3px; }
+  .owner-shell .booking-calendar-navigation .MuiButton-root { min-height: 28px; margin-left: 2px; padding: 0 5px; font-size: 9px; }
+  .owner-shell .booking-calendar-month-title { gap: 0; }
+  .owner-shell .booking-calendar-month-title h2 { font-size: clamp(12px, 3.8vw, 15px); letter-spacing: -.5px; }
+  .owner-shell .booking-calendar-month-title .MuiIconButton-root { width: 24px; height: 24px; flex-basis: 24px; padding: 3px; }
+  .owner-shell .booking-calendar-month-title .MuiSvgIcon-root { width: 17px; height: 17px; }
+  .owner-shell .booking-calendar-month-view { min-width: 48px; min-height: 28px; padding: 0 5px; font-size: 9px; }
+  .owner-shell .calendar-key { gap: 8px 13px; padding: 9px 10px; }
+  .owner-shell .calendar-key > span { gap: 6px; font-size: 10px; }
+  .owner-shell .booking-calendar-grid .fc .fc-toolbar-title { font-size: 13px; }
+  .owner-shell .booking-calendar-grid .fc .fc-button { min-height: 28px; padding: 0 4px; font-size: 9px; }
+  .owner-shell .booking-calendar-grid .fc .fc-prev-button,
+  .owner-shell .booking-calendar-grid .fc .fc-next-button { width: 28px; }
+}
